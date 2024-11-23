@@ -18,5 +18,22 @@
     <ClCompile Include="sw_team.c">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="sw_team_test.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="unity.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="sw_team.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="unity.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="unity_internals.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

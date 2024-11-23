@@ -1,11 +1,17 @@
 ﻿#include <stdio.h>
 #include <stdbool.h>
-#include <windows.h>
+ #include <windows.h>
 #include <stdlib.h>
 #include <time.h>
+#include <math.h>
+//#include <unistd.h>
+#include "sw_team.h"
 
-#define MOVE_DELAY 300
-#define ROTATE_DELAY 1
+//#define Sleep(ms) usleep((ms) * 100000)
+#define MOVE_DELAY 0
+#define ROTATE_DELAY 0
+//#define MOVE_DELAY 300
+//#define ROTATE_DELAY 1
 
 //맵은 3차원 배열로, 1, 2차원까지는 위치 좌표고 3차원부턴
 //[x, y]
@@ -13,69 +19,88 @@
 //y-> 0 : 먼지 없음 1 : 먼지 있음
 
 // 맵을 구성하는 cell간 거리는 모터가 움직일 수 있는 최소단위라 생각해주세요.
-int map[8][8][2] = {{{1,0}, {1,0}, {1,0}, {1,0}, {1,0}, {1,0}, {1,0}, {1,0}},
-				{{1,0}, {0,0}, {0,0}, {0,0}, {0,1}, {0,0}, {0,0}, {1,0}},
-				{{1,0}, {0,0}, {0,0}, {0,0}, {0,0}, {1,0}, {1,0}, {1,0}},
-				{{1,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {1,0}},
-				{{1,0}, {0,0}, {2,0}, {1,0}, {0,0}, {0,0}, {0,0}, {1,0}},
-				{{1,0}, {0,0}, {0,0}, {1,0}, {0,0}, {0,0}, {0,0}, {1,0}},
-				{{1,0}, {0,0}, {1,0}, {1,0}, {0,0}, {0,0}, {0,0}, {1,0}},
-				{{1,0}, {1,0}, {1,0}, {1,0}, {1,0}, {1,0}, {1,0}, {1,0}}};
+//int map[8][8][2] = {{{1,0}, {1,0}, {1,0}, {1,0}, {1,0}, {1,0}, {1,0}, {1,0}},
+//				{{1,0}, {0,0}, {0,0}, {0,0}, {0,1}, {0,0}, {0,0}, {1,0}},
+//				{{1,0}, {0,0}, {0,0}, {0,0}, {0,0}, {1,0}, {1,0}, {1,0}},
+//				{{1,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {1,0}},
+//				{{1,0}, {0,0}, {2,0}, {1,0}, {0,0}, {0,0}, {0,0}, {1,0}},
+//				{{1,0}, {0,0}, {0,0}, {1,0}, {0,0}, {0,0}, {0,0}, {1,0}},
+//				{{1,0}, {0,0}, {1,0}, {1,0}, {0,0}, {0,0}, {0,0}, {1,0}},
+//				{{1,0}, {1,0}, {1,0}, {1,0}, {1,0}, {1,0}, {1,0}, {1,0}}};
+
+ int map[20][20][2] = {
+ 	{{1,0}, {1,0}, {1,0}, {1,0}, {1,0}, {1,0}, {1,0}, {1,0}, {1,0}, {1,0}, {1,0}, {1,0}, {1,0}, {1,0}, {1,0}, {1,0}, {1,0}, {1,0}, {1,0}, {1,0}},
+ 	{{1,0}, {0,0}, {0,0}, {0,0}, {1,0}, {0,0}, {1,0}, {0,0}, {0,0}, {1,0}, {0,1}, {0,0}, {1,0}, {0,0}, {1,0}, {0,0}, {0,0}, {0,0}, {1,0}, {1,0}},
+ 	{{1,0}, {0,1}, {1,0}, {0,0}, {1,0}, {0,0}, {1,0}, {0,0}, {1,0}, {1,0}, {1,0}, {0,0}, {1,0}, {0,1}, {1,0}, {0,0}, {1,0}, {0,1}, {1,0}, {1,0}},
+ 	{{1,0}, {0,0}, {1,0}, {0,0}, {1,0}, {0,0}, {1,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {1,0}, {0,0}, {1,0}, {0,0}, {1,0}, {0,0}, {1,0}, {1,0}},
+ 	{{1,0}, {0,0}, {1,0}, {1,0}, {1,0}, {0,0}, {1,0}, {1,0}, {1,0}, {1,0}, {1,0}, {0,0}, {1,0}, {1,0}, {1,0}, {0,0}, {1,0}, {0,0}, {0,0}, {1,0}},
+ 	{{1,0}, {0,0}, {1,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,1}, {0,0}, {0,0}, {0,1}, {0,0}, {0,0}, {0,0}, {1,0}, {1,0}, {1,0}, {1,0}},
+ 	{{1,0}, {0,0}, {1,0}, {1,0}, {1,0}, {1,0}, {1,0}, {0,0}, {1,0}, {1,0}, {1,0}, {1,0}, {1,0}, {1,0}, {1,0}, {0,0}, {1,0}, {0,0}, {0,0}, {1,0}},
+ 	{{1,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {1,0}, {2,1}, {1,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {1,0}, {0,1}, {1,0}, {1,0}, {1,0}, {1,0}},
+ 	{{1,0}, {1,0}, {1,0}, {1,0}, {1,0}, {0,0}, {1,0}, {0,0}, {1,0}, {1,0}, {1,0}, {1,0}, {1,0}, {0,0}, {1,0}, {0,0}, {1,0}, {0,0}, {0,0}, {1,0}},
+ 	{{1,0}, {0,0}, {0,0}, {0,0}, {1,0}, {0,0}, {0,0}, {0,0}, {1,0}, {0,0}, {0,0}, {0,0}, {1,0}, {0,0}, {1,0}, {0,0}, {1,0}, {0,0}, {1,0}, {1,0}},
+ 	{{1,0}, {0,1}, {1,0}, {0,0}, {1,0}, {1,0}, {1,0}, {1,0}, {1,0}, {1,0}, {1,0}, {0,0}, {1,0}, {0,0}, {1,0}, {0,0}, {1,0}, {0,0}, {1,0}, {1,0}},
+ 	{{1,0}, {0,0}, {1,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {1,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {1,0}, {0,0}, {1,0}, {0,0}, {1,0}, {1,0}},
+ 	{{1,0}, {1,0}, {1,0}, {0,0}, {1,0}, {1,0}, {1,0}, {0,0}, {1,0}, {0,1}, {1,0}, {1,0}, {1,0}, {0,0}, {1,0}, {1,0}, {1,0}, {0,0}, {1,0}, {1,0}},
+ 	{{1,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {1,0}, {0,0}, {1,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {1,0}, {1,0}},
+ 	{{1,0}, {1,0}, {1,0}, {1,0}, {1,0}, {1,0}, {1,0}, {1,0}, {1,0}, {1,0}, {1,0}, {1,0}, {1,0}, {1,0}, {1,0}, {1,0}, {1,0}, {1,0}, {1,0}, {1,0}}
+ };
 
 //int map[20][20][2] = {
 //	{{1,0}, {1,0}, {1,0}, {1,0}, {1,0}, {1,0}, {1,0}, {1,0}, {1,0}, {1,0}, {1,0}, {1,0}, {1,0}, {1,0}, {1,0}, {1,0}, {1,0}, {1,0}, {1,0}, {1,0}},
-//	{{1,0}, {0,0}, {0,0}, {0,0}, {1,0}, {0,0}, {1,0}, {0,0}, {0,0}, {1,0}, {0,1}, {0,0}, {1,0}, {0,0}, {1,0}, {0,0}, {0,0}, {0,0}, {1,0}, {1,0}},
-//	{{1,0}, {0,1}, {1,0}, {0,0}, {1,0}, {0,0}, {1,0}, {0,0}, {1,0}, {1,0}, {1,0}, {0,0}, {1,0}, {0,1}, {1,0}, {0,0}, {1,0}, {0,1}, {1,0}, {1,0}},
-//	{{1,0}, {0,0}, {1,0}, {0,0}, {1,0}, {0,0}, {1,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {1,0}, {0,0}, {1,0}, {0,0}, {1,0}, {0,0}, {1,0}, {1,0}},
-//	{{1,0}, {0,0}, {1,0}, {1,0}, {1,0}, {0,0}, {1,0}, {1,0}, {1,0}, {1,0}, {1,0}, {0,0}, {1,0}, {1,0}, {1,0}, {0,0}, {1,0}, {0,0}, {0,0}, {1,0}},
-//	{{1,0}, {0,0}, {1,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,1}, {0,0}, {0,0}, {0,1}, {0,0}, {0,0}, {0,0}, {1,0}, {1,0}, {1,0}, {1,0}},
-//	{{1,0}, {0,0}, {1,0}, {1,0}, {1,0}, {1,0}, {1,0}, {0,0}, {1,0}, {1,0}, {1,0}, {1,0}, {1,0}, {1,0}, {1,0}, {0,0}, {1,0}, {0,0}, {0,0}, {1,0}},
-//	{{1,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {1,0}, {2,1}, {1,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {1,0}, {0,1}, {1,0}, {1,0}, {1,0}, {1,0}},
-//	{{1,0}, {1,0}, {1,0}, {1,0}, {1,0}, {0,0}, {1,0}, {0,0}, {1,0}, {1,0}, {1,0}, {1,0}, {1,0}, {0,0}, {1,0}, {0,0}, {1,0}, {0,0}, {0,0}, {1,0}},
-//	{{1,0}, {0,0}, {0,0}, {0,0}, {1,0}, {0,0}, {0,0}, {0,0}, {1,0}, {0,0}, {0,0}, {0,0}, {1,0}, {0,0}, {1,0}, {0,0}, {1,0}, {0,0}, {1,0}, {1,0}},
-//	{{1,0}, {0,1}, {1,0}, {0,0}, {1,0}, {1,0}, {1,0}, {1,0}, {1,0}, {1,0}, {1,0}, {0,0}, {1,0}, {0,0}, {1,0}, {0,0}, {1,0}, {0,0}, {1,0}, {1,0}},
-//	{{1,0}, {0,0}, {1,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {1,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {1,0}, {0,0}, {1,0}, {0,0}, {1,0}, {1,0}},
-//	{{1,0}, {1,0}, {1,0}, {0,0}, {1,0}, {1,0}, {1,0}, {0,0}, {1,0}, {0,1}, {1,0}, {1,0}, {1,0}, {0,0}, {1,0}, {1,0}, {1,0}, {0,0}, {1,0}, {1,0}},
-//	{{1,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {1,0}, {0,0}, {1,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {1,0}, {1,0}},
-//	{{1,0}, {1,0}, {1,0}, {1,0}, {1,0}, {1,0}, {1,0}, {1,0}, {1,0}, {1,0}, {1,0}, {1,0}, {1,0}, {1,0}, {1,0}, {1,0}, {1,0}, {1,0}, {1,0}, {1,0}}
+//	{{1,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {1,0}},
+//	{{1,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {1,0}},
+//	{{1,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {1,0}},
+//	{{1,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {1,0}},
+//	{{1,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {1,0}},
+//	{{1,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {1,0}},
+//	{{1,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {1,0}},
+//	{{1,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {1,0}},
+//	{{1,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {1,0}},
+//	{{1,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {1,0}},
+//	{{1,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {1,0}},
+//	{{1,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {1,0}},
+//	{{1,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {0,0}, {1,0}}
 //};
 
 
 
-struct sensor {
-	bool (*sense)(int);
-};
+// struct sensor {
+// 	bool (*sense)(int);
+// };
 
-struct motor {
-	bool mf; // move foward
-	bool mb; // move backward
-	bool tl; // turn left
-	bool tr; // turn right
-	void (*move)(bool mf, bool mb, bool tl, bool tr); // 0: forward 1: turn_left 2: turn_right 3: backward
-};
+// struct motor {
+// 	bool mf; // move foward
+// 	bool mb; // move backward
+// 	bool tl; // turn left
+// 	bool tr; // turn right
+// 	void (*move)(bool mf, bool mb, bool tl, bool tr); // 0: forward 1: turn_left 2: turn_right 3: backward
+// };
 
-struct cleaner {
-	bool on;
-	bool turbo;
-	void (*clean)(bool on, bool turbo);
-};
+// struct cleaner {
+// 	bool on;
+// 	bool turbo;
+// 	void (*clean)(bool on, bool turbo);
+// };
 
-struct robot {
-	int state; // 0:INIT 1: MOVE_FORWARD 2: TURN_LEFT 3: TURN_RIGHT 4: BACKWARD 5: TURBO
-	int tick;
+// struct robot {
+// 	int state; // 0:INIT 1: MOVE_FORWARD 2: TURN_LEFT 3: TURN_RIGHT 4: BACKWARD 5: TURBO
+// 	int tick;
 
-	struct sensor front_sensor;
-	struct sensor right_sensor;
-	struct sensor left_sensor;
-	struct sensor dust_sensor;
-	struct motor motor;
-	struct cleaner cleaner;
+// 	struct sensor front_sensor;
+// 	struct sensor right_sensor;
+// 	struct sensor left_sensor;
+// 	struct sensor dust_sensor;
+// 	struct motor motor;
+// 	struct cleaner cleaner;
 
-	void(*control)(struct robot);
-};
+// 	void(*control)(struct robot, max_tick);
+// };
 
 int robot_location[2];
 int robot_rotation; // 0~359	0->up,  90->right,  180->down,  270->left
+int state_change_count = 0; // state에 유의미한 차이를 줬을때 ++
+bool map_print_flag = true;
 
 // 모든 sleep문은 디버깅용으로, 제거하여도 정상작동합니다.
 
@@ -111,6 +136,7 @@ int* calc_location(int direction) { // 0:front 1:left 2:right 3:back
 		printf("critical error! rotation value: %d...!\n", robot_rotation);
 		exit(1); // 회전 값 오류
 	}
+
 	result[0] = robot_location[0] + adjusted_x;
 	result[1] = robot_location[1] + adjusted_y;
 
@@ -122,7 +148,7 @@ int map_check(int* location, int idx) {
 }
 
 void printing(struct robot rb, bool* ol, bool de) {
-	system("cls");
+	printf("\033[H\033[J");
 	char* state = "";
 	char* cleaner_state = "";
 	char* motor_state = "";
@@ -145,7 +171,7 @@ void printing(struct robot rb, bool* ol, bool de) {
 	if (rb.cleaner.on) {
 		if (rb.cleaner.turbo)
 			cleaner_state = "turbo";
-		else 
+		else
 			cleaner_state = "on";
 	}
 	else {
@@ -197,7 +223,7 @@ void printing(struct robot rb, bool* ol, bool de) {
 void move_robot_to(int* new_location) {
 	// 벽박음!
 	if (map[new_location[0]][new_location[1]][0] == 1) {
-		printf("crash!");
+		printf(".");
 		return;
 	}
 
@@ -238,8 +264,8 @@ void move(bool mf, bool mb, bool tl, bool tr) {
 void clean(bool on, bool turbo) {
 	if (on) {
 		if (turbo) {
-			if (rand() % 4 == 0) // 확률적으로 제거
-				map[robot_location[0]][robot_location[1]][1] = 0;
+			// if (rand() % 4 == 0) // 확률적으로 제거
+			map[robot_location[0]][robot_location[1]][1] = 0;
 		}
 	}
 }
@@ -266,105 +292,108 @@ bool determine_dust_existance(struct robot rb) {
 	return d;
 }
 
-void control(struct robot rb) {
-	while (true) {
-		rb.tick++;
+void control(struct robot *rb, int max_state_change_count) {
+	while (state_change_count < max_state_change_count) {
+		rb->tick++;
+		rb->motor.move(rb->motor.mf, rb->motor.mb, rb->motor.tl, rb->motor.tr);
+		rb->cleaner.clean(rb->cleaner.on, rb->cleaner.turbo);
 
-		rb.motor.move(rb.motor.mf, rb.motor.mb, rb.motor.tl, rb.motor.tr);
-		rb.cleaner.clean(rb.cleaner.on, rb.cleaner.turbo);
+		bool* ol = determine_obstacle_location(*rb); // obstacle_location
+		bool de = determine_dust_existance(*rb); // dust_existance
 
-		bool* ol = determine_obstacle_location(rb); // obstacle_location
-		bool de = determine_dust_existance(rb); // dust_existance
-
-		if (robot_rotation % 30 == 0) printing(rb, ol, de); // 디버깅용
-
-		switch (rb.state) {
+		if (map_print_flag && robot_rotation % 30 == 0) printing(*rb, ol, de); // 디버깅용
+		switch (rb->state) {
 		case 0: // INIT	
 			Sleep(MOVE_DELAY);
-			if (ol[0]) { // 수정됨
-				rb.motor.tr = true; 
-				rb.motor.mf = false;
-				rb.cleaner.on = false;
-				rb.state = 3;
-			} 
-			else { 
-				rb.motor.mf = true;
-				rb.cleaner.on = true;
+			if (ol[0]) {
+				rb->motor.tr = true;
+				rb->motor.mf = false;
+				rb->cleaner.on = false;
+				rb->state = 3;
+				state_change_count++;
+			}
+			else {
+				rb->motor.mf = true;
+				rb->cleaner.on = true;
 			}
 			break;
 
 		case 1: // MOVE_FORWARD
 			Sleep(MOVE_DELAY);
 			if (de) { // dust detected
-				rb.motor.mf = false;
-				rb.cleaner.turbo = true;
-				rb.state = 5; continue; 
+				rb->motor.mf = false;
+				rb->cleaner.turbo = true;
+				rb->state = 5; 
 			}
 			else if ((ol[0] & ol[1] & ol[2])) { // backward
-				rb.motor.mf = false;
-				rb.motor.mb = true;
-				rb.cleaner.on = false;
-				rb.state = 4; continue;
+				rb->motor.mf = false;
+				rb->motor.mb = true;
+				rb->cleaner.on = false;
+				rb->state = 4; 
 			}
-			else if (!ol[1]) { // turn_left // 수정됨
-				rb.motor.mf = false;
-				rb.motor.tl = true;
-				rb.cleaner.on = false;
-				rb.state = 2; continue;
+			else if (!ol[1]) { // turn_left
+				rb->motor.mf = false;
+				rb->motor.tl = true;
+				rb->cleaner.on = false;
+				rb->state = 2; 
 			}
-			else if ((ol[0] & !ol[2])) { // turn_right // 수정됨
-				rb.motor.mf = false;
-				rb.motor.tr = true;
-				rb.cleaner.on = false;
-				rb.state = 3; continue;
+			else if ((ol[0] & !ol[2])) { // turn_right
+				rb->motor.mf = false;
+				rb->motor.tr = true;
+				rb->cleaner.on = false;
+				rb->state = 3; 
 			}
-
-
+			state_change_count++;
 			break;
 
 		case 2: // TURN_LEFT
 			Sleep(ROTATE_DELAY);
-			if (robot_rotation % 90 == 0) { 
-				rb.motor.mf = true;
-				rb.motor.tl = false;
-				rb.cleaner.on = true;
-				rb.state = 1;
+			if (robot_rotation % 90 == 0) {
+				rb->motor.mf = true;
+				rb->motor.tl = false;
+				rb->cleaner.on = true;
+				rb->state = 1;
+				state_change_count++;
 			}
 			break;
 
 		case 3: // TURN_RIGHT
 			Sleep(ROTATE_DELAY);
-			if (robot_rotation % 90 == 0 & !ol[0]) {
-				rb.motor.mf = true;
-				rb.motor.tr = false;
-				rb.cleaner.on = true;
-				rb.state = 1; 
+			if (robot_rotation % 90 == 0) {
+				if (!ol[0]) {
+					rb->motor.mf = true;
+					rb->motor.tr = false;
+					rb->cleaner.on = true;
+					rb->state = 1;
+				}
+				state_change_count++;
 			}
 			break;
 
 		case 4: // BACKWARD
 			Sleep(MOVE_DELAY);
 			if (!ol[2] | !ol[1]) {
-				rb.motor.mb = false;
-				rb.motor.tr = true;
-				rb.state = 3; 
+				rb->motor.mb = false;
+				rb->motor.tr = true;
+				rb->state = 3;
 			}
-			else { }
+			state_change_count++;
 			break;
 
 		case 5: // TURBO
 			Sleep(MOVE_DELAY);
-			if (!de) { 
-				rb.motor.mf = true;
-				rb.cleaner.turbo = false;
-				rb.state = 1; 
+			if (!de) {
+				rb->motor.mf = true;
+				rb->cleaner.turbo = false;
+				rb->state = 1;
+				state_change_count++;
 			}
 			break;
 		}
 	}
 }
 
-struct robot generate_robot() {
+struct robot generate_robot(int state) {
 	for (int row = 0; row < 8; row++) {
 		for (int col = 0; col < 8; col++) {
 			if (map[row][col][0] == 2) {
@@ -374,9 +403,10 @@ struct robot generate_robot() {
 		}
 	}
 	robot_rotation = 0;
+	state_change_count = 0;
 
 	struct robot rb;
-	rb.state = 0;
+	rb.state = state;
 	rb.tick = 0;
 
 	rb.front_sensor.sense = sense;
@@ -396,12 +426,34 @@ struct robot generate_robot() {
 
 	rb.control = control;
 
+	switch (state) {
+	case 1:
+		rb.motor.mf = true;
+		rb.cleaner.on = true;
+		robot_location[0]++;
+		break;
+	case 2:
+		rb.motor.tl = true;
+		break;
+	case 3:
+		rb.motor.tr = true;
+		break;
+	case 4:
+		rb.motor.mb = true;
+		robot_location[0]--;
+		break;
+	case 5:
+		rb.cleaner.on = true;
+		rb.cleaner.turbo = true;
+		break;
+	}
+
 	return rb;
 }
 
-void main() { // robot은 한번에 최대 1개 생성가능...
-	srand(time(NULL));
-
-	struct robot rb = generate_robot();
-	rb.control(rb);
-}
+//int main() { // robot은 한번에 최대 1개 생성가능...
+//	srand(time(NULL));
+//
+//	struct robot rb = generate_robot(0);
+//	rb.control(&rb, 100);
+//}

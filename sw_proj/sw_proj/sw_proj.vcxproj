@@ -20,6 +20,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="sw_team.c" />
+    <ClCompile Include="sw_team_test.c" />
+    <ClCompile Include="unity.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="sw_team.h" />
+    <ClInclude Include="unity.h" />
+    <ClInclude Include="unity_internals.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

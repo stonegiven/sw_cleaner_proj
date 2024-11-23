@@ -1,0 +1,122 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Gits\\sw_cleaner_proj\\sw_proj\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{FE69FC28-436E-472B-91AE-54C29822312D}|sw_proj\\sw_proj.vcxproj|C:\\Gits\\sw_cleaner_proj\\sw_proj\\sw_proj\\sw_team_test.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{FE69FC28-436E-472B-91AE-54C29822312D}|sw_proj\\sw_proj.vcxproj|solutionrelative:sw_proj\\sw_team_test.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FE69FC28-436E-472B-91AE-54C29822312D}|sw_proj\\sw_proj.vcxproj|C:\\Gits\\sw_cleaner_proj\\sw_proj\\sw_proj\\sw_team.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{FE69FC28-436E-472B-91AE-54C29822312D}|sw_proj\\sw_proj.vcxproj|solutionrelative:sw_proj\\sw_team.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FE69FC28-436E-472B-91AE-54C29822312D}|sw_proj\\sw_proj.vcxproj|C:\\Gits\\sw_cleaner_proj\\sw_proj\\sw_proj\\sw_team.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{FE69FC28-436E-472B-91AE-54C29822312D}|sw_proj\\sw_proj.vcxproj|solutionrelative:sw_proj\\sw_team.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FE69FC28-436E-472B-91AE-54C29822312D}|sw_proj\\sw_proj.vcxproj|C:\\Gits\\sw_cleaner_proj\\sw_proj\\sw_proj\\unity_internals.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{FE69FC28-436E-472B-91AE-54C29822312D}|sw_proj\\sw_proj.vcxproj|solutionrelative:sw_proj\\unity_internals.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FE69FC28-436E-472B-91AE-54C29822312D}|sw_proj\\sw_proj.vcxproj|C:\\Gits\\sw_cleaner_proj\\sw_proj\\sw_proj\\unity.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{FE69FC28-436E-472B-91AE-54C29822312D}|sw_proj\\sw_proj.vcxproj|solutionrelative:sw_proj\\unity.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FE69FC28-436E-472B-91AE-54C29822312D}|sw_proj\\sw_proj.vcxproj|C:\\Gits\\sw_cleaner_proj\\sw_proj\\sw_proj\\unity.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{FE69FC28-436E-472B-91AE-54C29822312D}|sw_proj\\sw_proj.vcxproj|solutionrelative:sw_proj\\unity.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 5,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "unity.c",
+              "DocumentMoniker": "C:\\Gits\\sw_cleaner_proj\\sw_proj\\sw_proj\\unity.c",
+              "RelativeDocumentMoniker": "sw_proj\\unity.c",
+              "ToolTip": "C:\\Gits\\sw_cleaner_proj\\sw_proj\\sw_proj\\unity.c",
+              "RelativeToolTip": "sw_proj\\unity.c",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAWAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
+              "WhenOpened": "2024-11-23T13:23:55.5Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "unity.h",
+              "DocumentMoniker": "C:\\Gits\\sw_cleaner_proj\\sw_proj\\sw_proj\\unity.h",
+              "RelativeDocumentMoniker": "sw_proj\\unity.h",
+              "ToolTip": "C:\\Gits\\sw_cleaner_proj\\sw_proj\\sw_proj\\unity.h",
+              "RelativeToolTip": "sw_proj\\unity.h",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-11-23T13:23:56.903Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "unity_internals.h",
+              "DocumentMoniker": "C:\\Gits\\sw_cleaner_proj\\sw_proj\\sw_proj\\unity_internals.h",
+              "RelativeDocumentMoniker": "sw_proj\\unity_internals.h",
+              "ToolTip": "C:\\Gits\\sw_cleaner_proj\\sw_proj\\sw_proj\\unity_internals.h",
+              "RelativeToolTip": "sw_proj\\unity_internals.h",
+              "ViewState": "AgIAAA8AAAAAAAAAAAAAAAYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-11-23T13:23:57.412Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "sw_team.h",
+              "DocumentMoniker": "C:\\Gits\\sw_cleaner_proj\\sw_proj\\sw_proj\\sw_team.h",
+              "RelativeDocumentMoniker": "sw_proj\\sw_team.h",
+              "ToolTip": "C:\\Gits\\sw_cleaner_proj\\sw_proj\\sw_proj\\sw_team.h",
+              "RelativeToolTip": "sw_proj\\sw_team.h",
+              "ViewState": "AgIAAEkAAAAAAAAAAAAAAE8AAAAYAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-11-23T13:17:24.662Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "sw_team.c",
+              "DocumentMoniker": "C:\\Gits\\sw_cleaner_proj\\sw_proj\\sw_proj\\sw_team.c",
+              "RelativeDocumentMoniker": "sw_proj\\sw_team.c",
+              "ToolTip": "C:\\Gits\\sw_cleaner_proj\\sw_proj\\sw_proj\\sw_team.c",
+              "RelativeToolTip": "sw_proj\\sw_team.c",
+              "ViewState": "AgIAAGwBAAAAAAAAAAAAAHsBAAAYAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
+              "WhenOpened": "2024-11-22T04:00:13.193Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "sw_team_test.c",
+              "DocumentMoniker": "C:\\Gits\\sw_cleaner_proj\\sw_proj\\sw_proj\\sw_team_test.c",
+              "RelativeDocumentMoniker": "sw_proj\\sw_team_test.c",
+              "ToolTip": "C:\\Gits\\sw_cleaner_proj\\sw_proj\\sw_proj\\sw_team_test.c",
+              "RelativeToolTip": "sw_proj\\sw_team_test.c",
+              "ViewState": "AgIAACsCAAAAAAAAAAAAADQCAAAXAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
+              "WhenOpened": "2024-11-23T13:18:28.301Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
