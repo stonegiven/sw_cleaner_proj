@@ -1,25 +1,25 @@
 #include "unity.h"
 #include <stdlib.h>
 #include <time.h>
-#include "sw_team.h" // ���� �ڵ� ��� ����
+#include "sw_team.h"
 
 void setUp(void) {
     srand(time(NULL)); // �׽�Ʈ ȯ�� �ʱ�ȭ
 }
 
 typedef struct {
-    bool front;     // F: Front ��ֹ� ���� ����
-    bool left;      // L: Left ��ֹ� ���� ����
-    bool right;     // R: Right ��ֹ� ���� ����
-    bool dust;
+    bool front;     // F: 앞쪽 장애물 유무
+    bool left;      // L: 왼쪽 장애물 유무
+    bool right;     // R: 오른쪽 장애물 유무
+    bool dust;      // Dust: 먼지 유무
 } TestCase;
 
 void setup_test_case(TestCase tc) {
-    // �� �ʱ�ȭ
+    // 맵 초기화
     for (int i = 0; i < 20; i++) {
         for (int j = 0; j < 20; j++) {
-            map[i][j][0] = 0; // Clear all walls
-            map[i][j][1] = 0; // Clear all dust
+            map[i][j][0] = 0; // 벽 데이터 초기화
+            map[i][j][1] = 0; // 먼지 데이터 초기화
         }
     }
 
@@ -49,7 +49,7 @@ void tearDown(void) {}
 
 
 // 장애물 탐지 테스트
-// F = Front, L = Left, R = Right, Dust = ���� ���� ����
+// F = Front, L = Left, R = Right, Dust = 먼지 유무
 
 // Test0000 : F=0, L=0, R=0, Dust=0
 void test_Determine_Obstacle_0(void) {
